@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Header from "../components/Header";
 import HeroSection from "../components/HeroSection";
 import {ProjectShowcase} from "../components/ProjectShowcase";
 import { ProjectDetails } from "../components/ProjectDetails";
@@ -34,7 +33,6 @@ const Home = () => {
   // Otherwise render the normal homepage
   return (
     <div>
-      <Header />
       <HeroSection />
       <ProjectShowcase onViewProject={handleViewProject} />
       <Experience/>
