@@ -1,19 +1,26 @@
-import React from 'react';
-import { ExternalLink, Github, ArrowRight } from 'lucide-react';
-// import { Project } from '../data/projects';
+import React from "react";
+import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import projectImage1 from "../assets/event_management.png"
+import projectImage2 from "../assets/pixello_frontend.png"
+import projectImage3 from "../assets/pixello_backend.png"
 
 export const ProjectCard = ({ project, onViewDetails }) => {
+  const projectImages = {
+    1: projectImage1,
+    2: projectImage2,
+    3: projectImage3
+  };
   return (
     <div className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2">
       {/* Project Image */}
       <div className="relative h-48 overflow-hidden">
-        <img 
-          src={project.image} 
+        <img
+          src={projectImages[project.id]}
           alt={project.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
-        
+
         {/* Category Badge */}
         <div className="absolute top-4 left-4">
           <span className="px-3 py-1 bg-blue-600/90 backdrop-blur-sm text-white text-sm font-medium rounded-full">

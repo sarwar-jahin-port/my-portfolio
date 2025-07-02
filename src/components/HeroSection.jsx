@@ -1,11 +1,12 @@
 import { Download, Github, Linkedin, Mail, Twitter, ExternalLink } from 'lucide-react';
 import profile from "../assets/profile.jpg"
+import { useNavigate } from 'react-router-dom';
 function HeroSection() {
   const handleResumeDownload = () => {
     // Create a dummy resume download - replace with your actual resume file
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // Replace with your actual resume path
-    link.download = 'Your_Name_Resume.pdf';
+    link.href = '/sarwar_resume.pdf'; // Replace with your actual resume path
+    link.download = 'sarwar_resume.pdf';
     link.click();
   };
 
@@ -13,28 +14,30 @@ function HeroSection() {
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      url: 'https://linkedin.com/in/yourprofile',
+      url: 'https://www.linkedin.com/in/sarwar-jahin-a25437359/',
       color: 'hover:text-blue-400'
     },
     {
       name: 'GitHub',
       icon: Github,
-      url: 'https://github.com/yourusername',
+      url: 'https://github.com/sarwar-jahin-port',
       color: 'hover:text-gray-300'
     },
     {
       name: 'Twitter',
       icon: Twitter,
-      url: 'https://twitter.com/yourusername',
+      url: 'https://x.com/sarwarrjahin',
       color: 'hover:text-sky-400'
     },
     {
       name: 'Email',
       icon: Mail,
-      url: 'mailto:your.email@example.com',
+      url: 'mailto:sarwarjahin@gmail.com',
       color: 'hover:text-red-400'
     }
   ];
+
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
@@ -81,7 +84,7 @@ function HeroSection() {
                 Download Resume
               </button>
               
-              <button className="group inline-flex items-center justify-center gap-3 border-2 border-slate-600 hover:border-blue-400 text-slate-300 hover:text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:bg-slate-800/50">
+              <button onClick={() => navigate('/projects')} className="group inline-flex items-center justify-center gap-3 border-2 border-slate-600 hover:border-blue-400 text-slate-300 hover:text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:bg-slate-800/50">
                 <ExternalLink className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
                 View My Work
               </button>

@@ -1,137 +1,143 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Github, ExternalLink, Calendar, Users, Clock, CheckCircle, Star, Code, Zap } from 'lucide-react';
-
-const ProjectDetail = ({ projectId = '1' }) => {
-  const id = projectId;
+import {projects} from '../data/projects';
+import projectImage1 from "../assets/event_management.png"
+import projectImage2 from "../assets/pixello_frontend.png"
+import projectImage3 from "../assets/pixello_backend.png"
+import { useParams } from 'react-router-dom';
+const ProjectDetail = () => {
+  const { projectId } = useParams();
+  console.log(projectId)
+  const id = projectId || "1";
   const [imageLoaded, setImageLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   
   // Enhanced project data with more details
-  const projects = {
-    1: {
-      title: 'E-commerce Platform',
-      subtitle: 'Full-Stack Shopping Experience',
-      description: 'A comprehensive full-stack e-commerce platform designed to provide seamless shopping experiences for users and efficient management tools for administrators.',
-      longDescription: `This e-commerce platform represents a complete solution for online retail businesses. Built with modern web technologies, it offers a responsive and intuitive user interface that works perfectly across all devices.
+  // const projects = {
+  //   1: {
+  //     title: 'E-commerce Platform',
+  //     subtitle: 'Full-Stack Shopping Experience',
+  //     description: 'A comprehensive full-stack e-commerce platform designed to provide seamless shopping experiences for users and efficient management tools for administrators.',
+  //     longDescription: `This e-commerce platform represents a complete solution for online retail businesses. Built with modern web technologies, it offers a responsive and intuitive user interface that works perfectly across all devices.
 
-      The platform includes advanced features such as product search and filtering, shopping cart management, secure payment processing, order tracking, and user account management. For administrators, it provides comprehensive dashboards for inventory management, order processing, customer management, and sales analytics.
+  //     The platform includes advanced features such as product search and filtering, shopping cart management, secure payment processing, order tracking, and user account management. For administrators, it provides comprehensive dashboards for inventory management, order processing, customer management, and sales analytics.
 
-      The backend is built with Django REST Framework, ensuring robust API endpoints and secure data handling. The frontend utilizes React with modern hooks and context API for state management, providing a smooth and interactive user experience.`,
-      image: 'https://images.pexels.com/photos/3584994/pexels-photo-3584994.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      technologies: ['React', 'Django', 'PostgreSQL', 'Tailwind CSS', 'REST API', 'JWT Authentication'],
-      features: [
-        'User authentication and authorization',
-        'Product catalog with search and filtering',
-        'Shopping cart and wishlist functionality',
-        'Secure payment processing',
-        'Order management and tracking',
-        'Admin dashboard for inventory management',
-        'Responsive design for all devices',
-        'Email notifications'
-      ],
-      challenges: [
-        'Implementing secure payment processing with multiple payment gateways',
-        'Building real-time inventory management system',
-        'Optimizing database queries for large product catalogs',
-        'Creating responsive admin dashboard with complex data visualizations'
-      ],
-      learnings: [
-        'Advanced React patterns and state management',
-        'Django REST Framework best practices',
-        'Database optimization techniques',
-        'Payment gateway integration security'
-      ],
-      github: 'https://github.com',
-      live: 'https://example.com',
-      duration: '3 months',
-      team: 'Solo Project',
-      completed: 'March 2024',
-      status: 'Completed',
-      rating: 4.8
-    },
-    2: {
-      title: 'Task Management App',
-      subtitle: 'Real-time Team Collaboration',
-      description: 'A collaborative task management application with real-time updates and team collaboration features.',
-      longDescription: `This task management application was designed to streamline team collaboration and project tracking. The application provides real-time updates using WebSocket connections, allowing team members to see changes instantly without page refreshes.
+  //     The backend is built with Django REST Framework, ensuring robust API endpoints and secure data handling. The frontend utilizes React with modern hooks and context API for state management, providing a smooth and interactive user experience.`,
+  //     image: 'https://images.pexels.com/photos/3584994/pexels-photo-3584994.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  //     technologies: ['React', 'Django', 'PostgreSQL', 'Tailwind CSS', 'REST API', 'JWT Authentication'],
+  //     features: [
+  //       'User authentication and authorization',
+  //       'Product catalog with search and filtering',
+  //       'Shopping cart and wishlist functionality',
+  //       'Secure payment processing',
+  //       'Order management and tracking',
+  //       'Admin dashboard for inventory management',
+  //       'Responsive design for all devices',
+  //       'Email notifications'
+  //     ],
+  //     challenges: [
+  //       'Implementing secure payment processing with multiple payment gateways',
+  //       'Building real-time inventory management system',
+  //       'Optimizing database queries for large product catalogs',
+  //       'Creating responsive admin dashboard with complex data visualizations'
+  //     ],
+  //     learnings: [
+  //       'Advanced React patterns and state management',
+  //       'Django REST Framework best practices',
+  //       'Database optimization techniques',
+  //       'Payment gateway integration security'
+  //     ],
+  //     github: 'https://github.com',
+  //     live: 'https://example.com',
+  //     duration: '3 months',
+  //     team: 'Solo Project',
+  //     completed: 'March 2024',
+  //     status: 'Completed',
+  //     rating: 4.8
+  //   },
+  //   2: {
+  //     title: 'Task Management App',
+  //     subtitle: 'Real-time Team Collaboration',
+  //     description: 'A collaborative task management application with real-time updates and team collaboration features.',
+  //     longDescription: `This task management application was designed to streamline team collaboration and project tracking. The application provides real-time updates using WebSocket connections, allowing team members to see changes instantly without page refreshes.
 
-      The application features a modern and intuitive interface built with Next.js and Material-UI components. Users can create projects, assign tasks, set deadlines, track progress, and communicate through integrated commenting systems.
+  //     The application features a modern and intuitive interface built with Next.js and Material-UI components. Users can create projects, assign tasks, set deadlines, track progress, and communicate through integrated commenting systems.
 
-      The backend utilizes Node.js with Express framework and MongoDB for flexible data storage. Real-time functionality is implemented using Socket.io, ensuring seamless collaboration between team members.`,
-      image: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      technologies: ['Next.js', 'Node.js', 'MongoDB', 'Material-UI', 'Socket.io', 'JWT Authentication'],
-      features: [
-        'Real-time task updates',
-        'Team collaboration tools',
-        'Project timeline visualization',
-        'Task assignment and tracking',
-        'File attachment support',
-        'Comment and discussion threads',
-        'Progress reporting and analytics',
-        'Mobile-responsive interface'
-      ],
-      challenges: [
-        'Implementing real-time synchronization across multiple clients',
-        'Managing complex state updates with Socket.io',
-        'Building intuitive drag-and-drop task management',
-        'Optimizing performance with large datasets'
-      ],
-      learnings: [
-        'WebSocket implementation and management',
-        'Advanced MongoDB aggregation pipelines',
-        'Real-time application architecture patterns',
-        'Performance optimization techniques'
-      ],
-      github: 'https://github.com',
-      live: 'https://example.com',
-      duration: '4 months',
-      team: '2 Developers',
-      completed: 'February 2024',
-      status: 'Completed',
-      rating: 4.6
-    },
-    3: {
-      title: 'Weather Dashboard',
-      subtitle: 'Interactive Weather Analytics',
-      description: 'A responsive weather dashboard providing real-time weather data and forecasts.',
-      longDescription: `This weather dashboard application provides comprehensive weather information with an elegant and user-friendly interface. The application integrates with multiple weather APIs to ensure accurate and up-to-date weather data.
+  //     The backend utilizes Node.js with Express framework and MongoDB for flexible data storage. Real-time functionality is implemented using Socket.io, ensuring seamless collaboration between team members.`,
+  //     image: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  //     technologies: ['Next.js', 'Node.js', 'MongoDB', 'Material-UI', 'Socket.io', 'JWT Authentication'],
+  //     features: [
+  //       'Real-time task updates',
+  //       'Team collaboration tools',
+  //       'Project timeline visualization',
+  //       'Task assignment and tracking',
+  //       'File attachment support',
+  //       'Comment and discussion threads',
+  //       'Progress reporting and analytics',
+  //       'Mobile-responsive interface'
+  //     ],
+  //     challenges: [
+  //       'Implementing real-time synchronization across multiple clients',
+  //       'Managing complex state updates with Socket.io',
+  //       'Building intuitive drag-and-drop task management',
+  //       'Optimizing performance with large datasets'
+  //     ],
+  //     learnings: [
+  //       'WebSocket implementation and management',
+  //       'Advanced MongoDB aggregation pipelines',
+  //       'Real-time application architecture patterns',
+  //       'Performance optimization techniques'
+  //     ],
+  //     github: 'https://github.com',
+  //     live: 'https://example.com',
+  //     duration: '4 months',
+  //     team: '2 Developers',
+  //     completed: 'February 2024',
+  //     status: 'Completed',
+  //     rating: 4.6
+  //   },
+  //   3: {
+  //     title: 'Weather Dashboard',
+  //     subtitle: 'Interactive Weather Analytics',
+  //     description: 'A responsive weather dashboard providing real-time weather data and forecasts.',
+  //     longDescription: `This weather dashboard application provides comprehensive weather information with an elegant and user-friendly interface. The application integrates with multiple weather APIs to ensure accurate and up-to-date weather data.
 
-      Users can search for weather information by city name or use geolocation for current location weather. The dashboard displays current conditions, hourly forecasts, and extended 7-day forecasts with detailed meteorological data.
+  //     Users can search for weather information by city name or use geolocation for current location weather. The dashboard displays current conditions, hourly forecasts, and extended 7-day forecasts with detailed meteorological data.
 
-      The application features interactive charts and visualizations using Chart.js, making weather data easy to understand at a glance. The responsive design ensures optimal viewing experience across all devices.`,
-      image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=1200',
-      technologies: ['React', 'Chart.js', 'Weather API', 'CSS Modules', 'Geolocation API', 'Local Storage'],
-      features: [
-        'Current weather conditions',
-        'Hourly and daily forecasts',
-        'Interactive weather charts',
-        'Location-based weather data',
-        'Search functionality',
-        'Weather alerts and notifications',
-        'Favorite locations management',
-        'Responsive design'
-      ],
-      challenges: [
-        'Integrating multiple weather APIs for data redundancy',
-        'Creating responsive data visualizations',
-        'Handling geolocation permissions and errors',
-        'Implementing efficient data caching strategies'
-      ],
-      learnings: [
-        'API integration and error handling',
-        'Data visualization best practices',
-        'Browser geolocation API usage',
-        'Local storage optimization techniques'
-      ],
-      github: 'https://github.com',
-      live: 'https://example.com',
-      duration: '2 months',
-      team: 'Solo Project',
-      completed: 'January 2024',
-      status: 'Completed',
-      rating: 4.7
-    }
-  };
+  //     The application features interactive charts and visualizations using Chart.js, making weather data easy to understand at a glance. The responsive design ensures optimal viewing experience across all devices.`,
+  //     image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  //     technologies: ['React', 'Chart.js', 'Weather API', 'CSS Modules', 'Geolocation API', 'Local Storage'],
+  //     features: [
+  //       'Current weather conditions',
+  //       'Hourly and daily forecasts',
+  //       'Interactive weather charts',
+  //       'Location-based weather data',
+  //       'Search functionality',
+  //       'Weather alerts and notifications',
+  //       'Favorite locations management',
+  //       'Responsive design'
+  //     ],
+  //     challenges: [
+  //       'Integrating multiple weather APIs for data redundancy',
+  //       'Creating responsive data visualizations',
+  //       'Handling geolocation permissions and errors',
+  //       'Implementing efficient data caching strategies'
+  //     ],
+  //     learnings: [
+  //       'API integration and error handling',
+  //       'Data visualization best practices',
+  //       'Browser geolocation API usage',
+  //       'Local storage optimization techniques'
+  //     ],
+  //     github: 'https://github.com',
+  //     live: 'https://example.com',
+  //     duration: '2 months',
+  //     team: 'Solo Project',
+  //     completed: 'January 2024',
+  //     status: 'Completed',
+  //     rating: 4.7
+  //   }
+  // };
 
   const project = projects[id];
 
@@ -166,6 +172,12 @@ const ProjectDetail = ({ projectId = '1' }) => {
     { id: 'tech', label: 'Technology', icon: Code },
     { id: 'challenges', label: 'Challenges', icon: Zap }
   ];
+
+  const projectImages = {
+    1: projectImage1,
+    2: projectImage2,
+    3: projectImage3
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
@@ -217,7 +229,7 @@ const ProjectDetail = ({ projectId = '1' }) => {
 
               <div className="flex flex-wrap gap-4">
                 <a
-                  href={project.live}
+                  href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
@@ -226,7 +238,7 @@ const ProjectDetail = ({ projectId = '1' }) => {
                   View Live Demo
                 </a>
                 <a
-                  href={project.github}
+                  href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm border border-white/20"
@@ -242,7 +254,7 @@ const ProjectDetail = ({ projectId = '1' }) => {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
                 <div className="relative bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-4 overflow-hidden">
                   <img
-                    src={project.image}
+                    src={projectImages[projectId]}
                     alt={project.title}
                     className={`w-full h-64 lg:h-80 object-cover rounded-xl transition-all duration-700 ${
                       imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
